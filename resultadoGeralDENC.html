@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Eleição</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 12px 0;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Tela 1 -->
+    <div id="tela1">
+        <h2>Digite os votos da chapa 1</h2>
+        <input type="number" id="votos1" min="0" step="1">
+        <button onclick="irParaTela2()">Avançar</button>
+    </div>
+
+    <!-- Tela 2 -->
+    <div id="tela2" class="hidden">
+        <h2>Digite os votos da chapa 2</h2>
+        <input type="number" id="votos2" min="0" step="1">
+        <button onclick="mostrarResultado()">Ver Resultado</button>
+    </div>
+
+    <!-- Tela 3 -->
+    <div id="tela3" class="hidden">
+        <h2>Resultado das eleições</h2>
+        <div class="resultado" id="resultado1"></div>
+        <div class="resultado" id="resultado2"></div>
+        <div class="resultado" id="vencedor"></div>
+        <button onclick="reiniciar()">Nova votação</button>
+    </div>
+
+</div>
+
+<script>
+let chapa1 = 0;
+let chapa2 = 0;
+
+function irParaTela2() {
+    const valor1 = document.getElementById("votos1").value;
+
+    if (valor1 === "" || valor1 < 0) {
+        alert("Digite um número válido para a chapa 1.");
+        return;
+    }
+
+    chapa1 = parseInt(valor1);
+
+    document.getElementById("tela1").classList.add("hidden");
+    document.getElementById("tela2").classList.remove("hidden");
+}
+
+function mostrarResultado() {
+    const valor2 = document.getElementById("votos2").value;
+
+    if (valor2 === "" || valor2 < 0) {
+        alert("Digite um número válido para a chapa 2.");
+        return;
+    }
+
+    chapa2 = parseInt(valor2);
+
+    // Ordenação automática
+    let menor = Math.min(chapa1, chapa2);
+    let maior = Math.max(chapa1, chapa2);
+
+    document.getElementById("resultado1").innerText = "Chapa 1: " + menor + " votos";
+    document.getElementById("resultado2").innerText = "Chapa 2: " + maior + " votos";
+
+    if (menor === maior) {
+        document.getElementById("vencedor").innerText = "Empate!";
+    } else {
+        document.getElementById("vencedor").innerText = "Vencedor: Chapa 2";
+    }
+
+    document.getElementById("tela2").classList.add("hidden");
+    document.getElementById("tela3").classList.remove("hidden");
+}
+
+function reiniciar() {
+    document.getElementById("votos1").value = "";
+    document.getElementById("votos2").value = "";
+    document.getElementById("tela3").classList.add("hidden");
+    document.getElementById("tela1").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
