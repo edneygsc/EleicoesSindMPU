@@ -2,15 +2,26 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eleição</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* melhor que height fixa */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
         }
 
         .container {
@@ -18,21 +29,24 @@
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 320px;
+            width: 100%;
+            max-width: 400px; /* controla no desktop */
             text-align: center;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             margin: 12px 0;
             box-sizing: border-box;
             font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
         }
 
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #0078D7;
             color: white;
             border: none;
@@ -53,35 +67,50 @@
             margin-top: 15px;
             font-size: 18px;
         }
+
+        /* Ajustes extras para telas muito pequenas */
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-<h1>Simulador de um Sistema Eleitoral Fraudulento</h1>
-<div class="container">
 
-    <!-- Tela 1 -->
-    <div id="tela1">
-        <h2>Digite os votos da chapa 1</h2>
-        <input type="number" id="votos1" min="0" step="1">
-        <button onclick="irParaTela2()">Avançar</button>
+<div>
+    <h1>Simulador de um Sistema Eleitoral Fraudulento</h1>
+
+    <div class="container">
+
+        <!-- Tela 1 -->
+        <div id="tela1">
+            <h2>Digite os votos da chapa 1</h2>
+            <input type="number" id="votos1" min="0" step="1">
+            <button onclick="irParaTela2()">Avançar</button>
+        </div>
+
+        <!-- Tela 2 -->
+        <div id="tela2" class="hidden">
+            <h2>Digite os votos da chapa 2</h2>
+            <input type="number" id="votos2" min="0" step="1">
+            <button onclick="mostrarResultado()">Ver Resultado</button>
+        </div>
+
+        <!-- Tela 3 -->
+        <div id="tela3" class="hidden">
+            <h2>Resultado das eleições</h2>
+            <div class="resultado" id="resultado1"></div>
+            <div class="resultado" id="resultado2"></div>
+            <div class="resultado" id="vencedor"></div>
+            <button onclick="reiniciar()">Nova votação</button>
+        </div>
+
     </div>
-
-    <!-- Tela 2 -->
-    <div id="tela2" class="hidden">
-        <h2>Digite os votos da chapa 2</h2>
-        <input type="number" id="votos2" min="0" step="1">
-        <button onclick="mostrarResultado()">Ver Resultado</button>
-    </div>
-
-    <!-- Tela 3 -->
-    <div id="tela3" class="hidden">
-        <h2>Resultado das eleições</h2>
-        <div class="resultado" id="resultado1"></div>
-        <div class="resultado" id="resultado2"></div>
-        <div class="resultado" id="vencedor"></div>
-        <button onclick="reiniciar()">Nova votação</button>
-    </div>
-
 </div>
 
 <script>
@@ -112,7 +141,6 @@ function mostrarResultado() {
 
     chapa2 = parseInt(valor2);
 
-    // Ordenação automática
     let menor = Math.min(chapa1, chapa2);
     let maior = Math.max(chapa1, chapa2);
 
@@ -139,4 +167,3 @@ function reiniciar() {
 
 </body>
 </html>
-
